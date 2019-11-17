@@ -17,7 +17,7 @@ public class FPSMovement : MonoBehaviour
     // Variables for Leaning
     public Transform leanPivot;
 
-    public bool inLean = false;
+    Coroutine isLeaning;
     public bool isLeaningLeft = false;
     public bool isLeaningRight = false;
 
@@ -68,62 +68,44 @@ public class FPSMovement : MonoBehaviour
         // Leans left
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (!isLeaningLeft && !isLeaningRight && !inLean)
-            {
-                isLeaningLeft = true;
-                isLeaningRight = false;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, 15, 0.2f));
-                Invoke("Delay", 0.2f);
-            }
-
-            else if (isLeaningLeft && !inLean)
-            {
+            if(isLeaningLeft) {
                 isLeaningLeft = false;
-                isLeaningRight = false;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, -15, 0.1f));
-                Invoke("Delay", 0.1f);
+                StopCoroutine(isLeaning);
+                isLeaning = StartCoroutine(RotateSmooth(Vector3.forward, 0, 0.2f));
+            }
+            else
+            {
+                if (isLeaningRight)
+                {
+                    isLeaningRight = false;
+                    StopCoroutine(isLeaning);
+                }
+                //Lean 15 degrees when leaning from center
+                isLeaning = StartCoroutine(RotateSmooth(Vector3.forward, 15, 0.2f));
+                isLeaningLeft = true;
             }
 
-            else if (isLeaningRight && !inLean)
-            {
-                isLeaningLeft = true;
-                isLeaningRight = false;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, 30, 0.4f));
-                Invoke("Delay", 0.4f);
-            }
         }
 
         // Leans right
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!isLeaningRight && !isLeaningLeft && !inLean)
+            if (isLeaningRight)
             {
-                isLeaningLeft = false;
-                isLeaningRight = true;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, -15, 0.2f));
-                Invoke("Delay", 0.2f);
-            }
-
-            else if (isLeaningRight && !inLean)
-            {
-                isLeaningLeft = false;
                 isLeaningRight = false;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, 15, 0.1f));
-                Invoke("Delay", 0.1f);
+                StopCoroutine(isLeaning);
+                isLeaning = StartCoroutine(RotateSmooth(Vector3.forward, 0, 0.2f));
             }
-
-            else if (isLeaningLeft && !inLean)
+            else
             {
-                isLeaningLeft = false;
+                if (isLeaningLeft)
+                {
+                    isLeaningLeft = false;
+                    StopCoroutine(isLeaning);
+                }
+                //Lean 15 degrees when leaning from center
+                isLeaning = StartCoroutine(RotateSmooth(Vector3.forward, -15, 0.2f));
                 isLeaningRight = true;
-                inLean = true;
-                StartCoroutine(RotateSmooth(Vector3.forward, -30, 0.4f));
-                Invoke("Delay", 0.4f);
             }
         }
     }
@@ -134,7 +116,7 @@ public class FPSMovement : MonoBehaviour
         Quaternion from = transform.localRotation;
         Quaternion to = transform.localRotation;
 
-        to *= Quaternion.Euler(axis * angle);
+        to = Quaternion.Euler(axis * angle);
 
         float elapsed = 0.0f;
         while(elapsed < duration)
@@ -146,9 +128,4 @@ public class FPSMovement : MonoBehaviour
         transform.localRotation = to;
     }
 
-    // Used in an invoke to make sure the user cannot lean during another lean
-    void Delay()
-    {
-        inLean = false;
-    }
 }
