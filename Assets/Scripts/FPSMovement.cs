@@ -8,6 +8,7 @@ Assignment: Aim Rush
 Contains logic for FPS Movement (Lean and Crouch)
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -108,6 +109,11 @@ public class FPSMovement : MonoBehaviour
                 isLeaningRight = true;
             }
         }
+    }
+
+    internal static void RotateSmooth()
+    {
+        throw new NotImplementedException();
     }
 
     // Used to rotate camera based on angles and time duration

@@ -116283,6 +116283,26 @@ PrefabInstance:
       propertyPath: pm
       value: 
       objectReference: {fileID: 1170592281}
+    - target: {fileID: 2004115718623397312, guid: d6f2f45ad17d7b04aa39da69bbfe1501,
+        type: 3}
+      propertyPath: timeBetweenBurst
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004115718623397312, guid: d6f2f45ad17d7b04aa39da69bbfe1501,
+        type: 3}
+      propertyPath: timeBetweenFullAuto
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004115718623397312, guid: d6f2f45ad17d7b04aa39da69bbfe1501,
+        type: 3}
+      propertyPath: numBurstShots
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004115718623397312, guid: d6f2f45ad17d7b04aa39da69bbfe1501,
+        type: 3}
+      propertyPath: fireType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6f2f45ad17d7b04aa39da69bbfe1501, type: 3}
 --- !u!1 &2283266742528073018 stripped
@@ -116598,6 +116618,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Timer
       objectReference: {fileID: 0}
+    - target: {fileID: 6907371728437948065, guid: 26889943d3e5e12489b6673f3595dfe0,
+        type: 3}
+      propertyPath: countdownText
+      value: 
+      objectReference: {fileID: 1164684561}
+    - target: {fileID: 6907371728437948065, guid: 26889943d3e5e12489b6673f3595dfe0,
+        type: 3}
+      propertyPath: timeLeft
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6907371728437948064, guid: 26889943d3e5e12489b6673f3595dfe0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -116652,16 +116682,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6907371728437948065, guid: 26889943d3e5e12489b6673f3595dfe0,
-        type: 3}
-      propertyPath: countdownText
-      value: 
-      objectReference: {fileID: 1164684561}
-    - target: {fileID: 6907371728437948065, guid: 26889943d3e5e12489b6673f3595dfe0,
-        type: 3}
-      propertyPath: timeLeft
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26889943d3e5e12489b6673f3595dfe0, type: 3}
