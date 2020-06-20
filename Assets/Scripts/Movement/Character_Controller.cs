@@ -14,6 +14,15 @@ public class Character_Controller : MonoBehaviour
     public float walkSpeed;
     public float sprintSpeed;
 
+    //jump variables
+    [Range(1, 10)]
+    float jumpVelocity;
+
+    //cleanJump
+    float fallMultiplier = 2.0f;
+    float lowJumpMultiplier = 2.5f;
+
+
     //bools for different character states
     bool isGrounded;
     bool canJump;
@@ -31,12 +40,16 @@ public class Character_Controller : MonoBehaviour
     public float xOffset { get; set; }
     public float yOffset { get; set; }
 
+    private void Awake()
+    {
+
+        GetComponent<Rigidbody>().velocity = Vector3.up * jumpVelocity;
+        myBody = GetComponent<Rigidbody>();
+        charCollider = GetComponent<CapsuleCollider>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        myBody = GetComponent<Rigidbody>();
-        charCollider = GetComponent<CapsuleCollider>();
-
         speed = walkSpeed;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -80,6 +93,7 @@ public class Character_Controller : MonoBehaviour
         }
 
         Sprint();
+        Jump();
     }
 
     void Sprint()
@@ -91,6 +105,26 @@ public class Character_Controller : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed = walkSpeed;
+        }
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CleanJump();
+        }
+    }
+
+    void CleanJump()
+    {
+        if (myBody.velocity.y < 0)
+        {
+            myBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (myBody.velocity.y > 0 && !Input.GetKeyDown(KeyCode.Space))
+        {
+            myBody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 }
