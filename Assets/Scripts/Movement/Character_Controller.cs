@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿//Edited by Scott Cummings Aug-29-2020
+//Player now follows the direction of the camera when pressing forward and there is no vertical movement when only pressing
+//keys for the horizontal.
+//Next Steps: Fix Movement for colliding with objects
+//            Fix gun movement
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +41,7 @@ public class Character_Controller : MonoBehaviour
     public float sensitivity = 2.0f;
     float x;
     float y;
+    float distance = 2; 
 
     //recoil
     public float xOffset { get; set; }
@@ -51,7 +58,7 @@ public class Character_Controller : MonoBehaviour
     void Start()
     {
         speed = walkSpeed;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; //Ensure that the camera is locked to the center of the screen
 
         x = 0;
         y = 0;
@@ -63,16 +70,22 @@ public class Character_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //get the inputs from keyboard
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = mainCamera.transform.forward * vertical + mainCamera.transform.right * horizontal;
+        //Changed from:
+        //Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal; 
+        Vector3 moveDirection = Camera.main.transform.forward * vertical + Camera.main.transform.right * horizontal;
 
         moveDirection = new Vector3(moveDirection.x, 0f, moveDirection.z);
         moveDirection = Vector3.Normalize(moveDirection);
 
         transform.Translate(moveDirection * speed * Time.deltaTime);
-        playerBody.Rotate(Vector3.up * horizontal);
+
+        //The following line breaks the script
+        //playerBody.Rotate(Vector3.up * horizontal)
+
 
         //mouse look 
         if (mainCamera.enabled)
@@ -91,7 +104,7 @@ public class Character_Controller : MonoBehaviour
             xOffset = 0;
             yOffset = 0;
         }
-
+        
         Sprint();
         Jump();
     }
